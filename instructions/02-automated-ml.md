@@ -23,7 +23,7 @@ To use automated machine learning, you require compute on which to run the model
 2. In Azure Machine Learning studio, view the **Compute** page; and on the **Compute instances** tab, start your compute instance if it is not already running. You will use this compute instance to test your trained model.
 3. While the compute instance is starting, switch to the **Compute clusters** tab, and add a new compute cluster with the following settings. You'll run the automated machine learning experiment on this cluster to take advantage of the ability to distribute the training runs across multiple compute nodes:
     - **Location**: *The same location as your workspace*
-    - **Virtual Machine priority**: Dedicated
+    - **Virtual Machine tier**: Dedicated
     - **Virtual Machine type**: CPU
     - **Virtual Machine size**: Standard_DS11_v2
     - **Compute name**: *enter a unique name*
@@ -81,7 +81,8 @@ In Azure Machine Learning, operations that you run are called *experiments*. Fol
         - Select **View additional configuration settings** to open **Additional configurations**:
             - **Primary metric**: Select **AUC_Weighted** *(more about this metric later!)*
             - **Explain best model**: Selected - *this option causes automated machine learning to calculate feature importance for the best model; making it possible to determine the influence of each feature on the predicted label.*
-            - **Blocked algorithms**: Leave the default setting - *all algorithms can potentially be used when training*
+            - **Use all supported models**: <u>Un</u>selected - we'll restrict the experiment to try a few specific algorithms.
+            - **Allowed models**: Select only **LogisticRegression** and **RandomForest**. These will be the only algorithms tried in the experiment.
             - **Exit criterion**:
                 - **Training job time (hours)**: 0.5 - *this causes the experiment to end after a maximum of 30 minutes.*
                 - **Metric score threshold**: 0.90 - *this causes the experiment to end if a model achieves a weighted AUC metric of 90% or higher.*
